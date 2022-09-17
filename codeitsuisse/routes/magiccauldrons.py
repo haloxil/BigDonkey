@@ -19,7 +19,7 @@ def cauldron():
     output = []
     for i in range(num_cases):
         output.append(cauldron_logic(data[i]))
-    return Response(output, mimetype='application/json')
+    return Response(json.dumps(output), mimetype='application/json')
 
 def cauldron_logic(stream: list):
     output_dict = {}
