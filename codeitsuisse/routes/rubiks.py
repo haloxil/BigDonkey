@@ -43,9 +43,9 @@ def evaluate_rubiks():
         if elem == "Fi":
             fi(state)
         if elem == "B":
-            f(state)
+            b(state)
         if elem == "Bi":
-            fi(state)
+            bi(state)
         if elem == "R":
             r(state)
         if elem == "Ri":
