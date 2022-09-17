@@ -118,7 +118,7 @@ def evaluate_calendar():
         elif day_list[i] == "alldays":
             for j in range(6):
                 output.append((datetime.datetime(new_year,i+1,j+2) - datetime.datetime(new_year,1,1)).days + 1)
-                output.append((datetime.datetime(new_year,i+1,1) - datetime.datetime(new_year,1,1)).days + 1)
+            output.append((datetime.datetime(new_year,i+1,1) - datetime.datetime(new_year,1,1)).days + 1)
             continue
         for k in range(len(day_list[i])):
             if day_list[i][k] == "m":
