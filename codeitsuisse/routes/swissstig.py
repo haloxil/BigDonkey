@@ -56,14 +56,9 @@ def stig_full_logic(interview):
     lucky = interview["lucky"]
     p=1
     next_p = 0
-    possibility_array = [0]
+    possibility_array = [1] * (maximum + 1)
     def f(val):
         return (val + p * lucky - 1) % maximum + 1
-    for real_value in range(1,maximum+1):
-        possible_values = SLinkedList()
-        for x in range(maximum,0,-1):
-            possible_values.AtBegining(x)
-        possibility_array.append(possible_values)
     for question_id in range(len(questions)):
         next_p = 0
         for real_value in range(1,maximum+1):
@@ -72,10 +67,13 @@ def stig_full_logic(interview):
             small = min(first_arg,second_arg)
             big = max(first_arg,second_arg)
             if small <= real_value <= big:
-                possibility_array[real_value].KeepRange(small,big)
+                if small > possibility_array[real_value]:
+                    possibility_array[real_value] = small
             else:
-                possibility_array[real_value].RemoveRange(small,big)
-            if possibility_array[real_value].head.data == real_value:
+                if possibility_array[real_value] > big: pass
+                elif possibility_array[real_value] <= big < real_value: possibility_array[real_value] = big + 1
+                elif possibility_array[real_value] < big <= real_value: possibility_array[real_value] = big
+            if possibility_array[real_value] == real_value:
                 next_p += 1
         gcd = math.gcd(next_p,maximum)
         p = int(next_p / gcd)
