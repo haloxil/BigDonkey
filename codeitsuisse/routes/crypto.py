@@ -6,16 +6,17 @@ from flask import request, jsonify
 from codeitsuisse import app
 
 logger = logging.getLogger(__name__)
+memo_dict = {}
 
 @app.route('/cryptocollapz', methods=['POST'])
 def evaluate_crypto():
     data = request.get_json()
     final_output = []
     output = []
-    memo_dict = {}
+
     for data_list in data:
         for elem in data_list:
-            max = crypto(elem, memo_dict)
+            max = crypto(elem)
             memo_dict[elem] = max
             output.append(max)              
         final_output.append(output)
@@ -28,7 +29,7 @@ def collatz(number):
     else:
         return (3 * number) + 1
 
-def crypto(n, memo_dict):
+def crypto(n):
     if n == 1:
         return 4
     max_num = 0
