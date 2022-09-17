@@ -18,7 +18,7 @@ def evaluate_crypto():
                 output.append(elem)
             else:   
                 num = elem
-                num_list = []
+                max = num
                 while (elem > 0):
                     if num % 2 == 0:
                         num /= 2
@@ -26,8 +26,11 @@ def evaluate_crypto():
                         num = num * 3 + 1
                     elem -= 1
 
-                    num_list.append(num)
-                output.append(int(max(num_list)))
+                    if num > max:
+                        max = num
+
+                output.append(int(max))
+                
         final_output.append(output)
         output = []
     return json.dumps(final_output)
