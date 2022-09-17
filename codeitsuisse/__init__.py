@@ -8,4 +8,5 @@ import codeitsuisse.routes.revesle
 import codeitsuisse.routes.calendar
 import codeitsuisse.routes.Quordle
 
+import codeitsuisse.routes.dnscache
 
