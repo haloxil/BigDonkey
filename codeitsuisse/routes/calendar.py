@@ -21,7 +21,7 @@ def evaluate_calendar():
     numbers = data["numbers"]
     year = numbers[0]
 
-    for day in numbers[1:]:
+    for day in numbers[1:]: #never check leap year
         if day <= 0 or day >= 366:
             continue
         date = datetime.datetime(year,1,1) + datetime.timedelta(day - 1)
@@ -40,8 +40,6 @@ def evaluate_calendar():
 
     date_list = list(date_dic.keys())
     date_list.sort()
-
-    print(date_list)
     temp = ""
 
     while count != 12:
@@ -98,5 +96,7 @@ def evaluate_calendar():
 
         count += 1
 
-    output_dict = {"part1": part1, "part2": []}
+    year_count = part1.index(' ')
+
+    output_dict = {"part1": part1, "part2": [year_count + 2001]}
     return json.dumps(output_dict)
