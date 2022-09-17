@@ -105,7 +105,7 @@ def update_knowledge(space, guess, result):
 
 def guess(attempts,length, eqn_History, res_History):
     possiblity_space = generate_possiblity_space(length)
-    if guesses >5:
+    if attempts >5:
         random_guesses = []
         #Exploration
         for x in range(50):
@@ -156,12 +156,16 @@ def make_guess(space, length):
                     (pending_digits > 0 and randrange(0,2) == 0):
                 pending_digits -= 1
                 current_num_in_stack += 1
+                if len(space[x][0]) == 0:
+                    return make_guess(space,length)
                 this_symbol = roll_unused_symbol(space[x][0])
                 used.add(this_symbol)
                 output += [this_symbol]
                 continue
             else:
                 current_num_in_stack -= 1
+                if len(space[x][1]) == 0:
+                    return make_guess(space,length)
                 this_symbol = roll_unused_symbol(space[x][1])
                 used.add(this_symbol)
                 output += [this_symbol]
