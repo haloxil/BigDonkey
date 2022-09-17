@@ -22,6 +22,8 @@ def evaluate_calendar():
     year = numbers[0]
 
     for day in numbers[1:]:
+        if day <= 0 or day >= 366:
+            continue
         date = datetime.datetime(year,1,1) + datetime.timedelta(day - 1)
         datem = date.strptime(str(date), "%Y-%m-%d %H:%M:%S")
         month = datem.month - 1
@@ -45,12 +47,6 @@ def evaluate_calendar():
     while count != 12:
         if date_list[index] != count:
             part1 += 7 * " " + ","
-        # elif "0" in date_dic[key] and "1" in date_dic[key] and "2" in date_dic[key] and "3" in date_dic[key] and "4" in date_dic[key] and "5" in date_dic[key] and "6" in date_dic[key]:
-        #     part1 += "alldays,"
-        # elif "0" in date_dic[key] and "1" in date_dic[key] and "2" in date_dic[key] and "3" in date_dic[key] and "4" in date_dic[key]:
-        #     part1 += "weekday,"
-        # elif "5" in date_dic[key] and "6" in date_dic[key]:
-        #     part1 += "weekend,"
         else:
             if "0" in date_dic[date_list[index]]:
                 temp += "m"
@@ -83,6 +79,10 @@ def evaluate_calendar():
 
             if temp == "mtwtfss":
                 part1 += "alldays"
+            elif temp == "mtwtfs ":
+                part1 += "weekday"
+            elif temp == "mtwtf s":
+                part1 += "weekday"
             elif temp == "mtwtf  ":
                 part1 += "weekday"
             elif temp == "     ss":
