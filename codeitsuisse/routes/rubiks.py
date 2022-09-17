@@ -184,7 +184,9 @@ def d(state):
 def di(state):
     state['d'] = np.rot90(np.array(state['d']), 1).tolist()
     temp = state['l'][2]
+    temp2 = state['b'][2]
+    temp3 = state['r'][2]
     state['l'][2] = state['f'][2]
-    state['f'][2] = state['r'][2]
-    state['r'][2] = state['b'][2]
     state['b'][2] = temp
+    state['r'][2] = temp2
+    state['f'][2] = temp3
