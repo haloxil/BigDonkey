@@ -164,7 +164,7 @@ def evaluate_calendar():
                         output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
 
     output_dict = {"part1": part1, "part2": output}
-    return json.dumps("why")
+    return json.dumps(output_dict)
 
 def is_leap_year(year):
     if (year % 400 == 0) and (year % 100 == 0):
