@@ -30,6 +30,10 @@ def evaluate_calendar():
             if str(day_of_week) not in date_dic[datem.month]:
                 date_dic[datem.month] += str(day_of_week)
 
+    if not bool (date_dic):
+        for i in range(12):
+            part1 += 7 * " " + ","
+
     date_list = list(date_dic.keys())
     date_list.sort()
     for key in date_list:
@@ -75,5 +79,5 @@ def evaluate_calendar():
 
             count += 1
 
-    output_dict = {"part1": [part1], "part2": []}
+    output_dict = {"part1": part1, "part2": []}
     return json.dumps(output_dict)
