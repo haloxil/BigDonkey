@@ -45,9 +45,9 @@ def cauldron_logic(stream: list):
             elif res < stream["part2"]["amount_of_soup"]:
                 lo = mid + 1
             else: hi = mid
-        if (get_water(stream["part2"]["row_number"],stream["part2"]["col_number"],stream["part2"]["flow_rate"]*lo) == stream["part2"]["amount_of_soup"]):
+        if round((get_water(stream["part2"]["row_number"],stream["part2"]["col_number"],stream["part2"]["flow_rate"]*lo),2) == stream["part2"]["amount_of_soup"]):
             return lo
-        elif (get_water(stream["part2"]["row_number"],stream["part2"]["col_number"],stream["part2"]["flow_rate"]*hi) == stream["part2"]["amount_of_soup"]):
+        elif round((get_water(stream["part2"]["row_number"],stream["part2"]["col_number"],stream["part2"]["flow_rate"]*hi)2) == stream["part2"]["amount_of_soup"]):
             return hi
         else: return lo
     def get_water_lopsided(row,col,initial_water):
@@ -71,9 +71,9 @@ def cauldron_logic(stream: list):
             elif res < stream["part4"]["amount_of_soup"]:
                 lo = mid + 1
             else: hi = mid
-        if (get_water_lopsided(stream["part4"]["row_number"],stream["part4"]["col_number"],stream["part4"]["flow_rate"]*lo) == stream["part4"]["amount_of_soup"]):
+        if round((get_water_lopsided(stream["part4"]["row_number"],stream["part4"]["col_number"],stream["part4"]["flow_rate"]*lo),2) == stream["part4"]["amount_of_soup"]):
             return lo
-        elif (get_water_lopsided(stream["part4"]["row_number"],stream["part4"]["col_number"],stream["part4"]["flow_rate"]*hi) == stream["part4"]["amount_of_soup"]):
+        elif round((get_water_lopsided(stream["part4"]["row_number"],stream["part4"]["col_number"],stream["part4"]["flow_rate"]*hi),2) == stream["part4"]["amount_of_soup"]):
             return hi
         else: return lo
 
