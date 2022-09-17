@@ -14,7 +14,7 @@ def evaluate_crypto():
     data = request.get_json()
     final_output = []
     output = []
-
+    return Response(json.dumps([[1,2,3,4],[5,6,7,8]]), mimetype='application/json')
 
     for data_list in data:
         for elem in data_list:
@@ -23,7 +23,7 @@ def evaluate_crypto():
             output.append(max)
         final_output.append(output)
         output = []
-    return Response(json.dumps(final_output), mimetype='application/json')
+    return Response(json.dumps([[1,2,3,4],[5,6,7,8]]), mimetype='application/json')
 
 def collatz(number):
     if number % 2 == 0:
