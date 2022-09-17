@@ -3,7 +3,7 @@ import json
 import queue
 import heapq
 
-from flask import request, jsonify
+from flask import request, Response
 
 from codeitsuisse import app
 
@@ -19,7 +19,7 @@ def cauldron():
     output = []
     for i in range(num_cases):
         output.append(cauldron_logic(data[i]))
-    return jsonify(output)
+    return Response(output, mimetype='application/json')
 
 def cauldron_logic(stream: list):
     output_dict = {}
