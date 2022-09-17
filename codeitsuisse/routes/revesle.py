@@ -13,7 +13,10 @@ rand_ele = lambda x: x[randrange(0,len(x))]
 def evaluate_reversle():
     data = request.get_json()
     eqn_len = data["equationLength"]
-    attempts = data["attemptsAllowed"]
+    if "attemptsAllowed" in data:
+        attempts = data["attemptsAllowed"]
+    else:
+        attempts = data["attemptsLeft"]
     output = guess(attempts,eqn_len,
                    data["equationHistory"] if "equationHistory" in data else None,
                    data["resultHistory"] if "resultHistory" in data else None)
@@ -110,7 +113,7 @@ def update_knowledge(space, guess, result):
 
 def guess(attempts,length, eqn_History, res_History):
     possiblity_space = generate_possiblity_space(length)
-    if attempts >5:
+    if attempts >3:
         random_guesses = []
         #Exploration
         for x in range(50):
@@ -160,6 +163,7 @@ def make_guess(space, length):
     for index,ele in enumerate(space):
         if "=" in ele[-1]:
             eq_locs += [index]
+
     num_digits_ops = rand_ele(eq_locs)
     
     pending_digits = num_digits_ops // 2 + 1
