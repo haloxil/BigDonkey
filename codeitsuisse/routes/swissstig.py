@@ -44,8 +44,34 @@ def stig_warmup_logic(interview):
 
 @app.route('/stig/full', methods=['POST'])
 def stig_full():
+    data = pyjson5.decode(request.get_data(as_text=True))
     output = []
+    for i in range(len(data)):
+        output.append(stig_full_logic(data[i]))
     return Response(json.dumps(output), mimetype='application/json')
+
+def stig_full_logic(interview):
+    max = interview["maxRating"]
+    questions = interview["questions"]
+    lucky = interview["lucky"]
+    p=1
+    possibility_array = [0]
+    for real_value in range(1,max+1):
+        possible_values = SLinkedList()
+        for x in range(max,0,-1):
+            possible_values.AtBegining(x)
+        possibility_array.append(possible_values)
+    for question_id in range(len(questions)):
+        for real_value in range(1,max+1):
+            if questions[question_id]["lower"] <= real_value <= questions[question_id]["upper"]:
+                possibility_array[question_id].KeepRange(questions[question_id]["lower"],questions[question_id]["upper"])
+            else:
+                possibility_array[question_id].RemoveRange(questions[question_id]["lower"],questions[question_id]["upper"])
+            if possibility_array[question_id].head.data == real_value:
+                p += 1
+        gcd = math.gcd(p,max)
+        p = int(p / gcd)
+    return {"p": int(p / gcd), "q": int(max / gcd)}
 
 class Node:
     def __init__(self, data=None):
