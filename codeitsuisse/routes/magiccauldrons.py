@@ -58,7 +58,7 @@ def cauldron_logic(stream: list):
     def bin_search_lopsided(stream):
         nonlocal store
         lo = 0
-        hi = (stream["part4"]["row_number"]**2 + 1) * (100.0 / stream["part4"]["flow_rate"])
+        hi = (stream["part4"]["row_number"]**2 + 10) * (100.0 / stream["part4"]["flow_rate"])
         while hi - lo > 1:
             store = [[-1] * (i+1) for i in range(stream["part4"]["row_number"]+1)]
             mid = (hi + lo) // 2
