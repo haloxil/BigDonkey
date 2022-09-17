@@ -1,3 +1,4 @@
+from curses.ascii import isspace
 import logging
 import json
 
@@ -96,7 +97,32 @@ def evaluate_calendar():
 
         count += 1
 
-    year_count = part1.index(' ')
+    new_year = 2001 + part1.index(' ')
+    day_list = part1.split(",")
+    output = [new_year]
+    for i in range(len(day_list)):
+        if day_list[i].isspace():
+            continue
 
-    output_dict = {"part1": part1, "part2": [year_count + 2001]}
+        if day_list[i] == "weekend":
+            for j in range(7):
+                date2 = datetime.datetime(new_year,i+1,j+1)
+                if date2.weekday() == 5 or date2.weekday() == 6:
+                    output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
+        elif day_list[i] == "weekday":
+            for j in range(7):
+                date2 = datetime.datetime(new_year,i+1,j+1)
+                if date2.weekday() == 0 or date2.weekday() == 1 or date2.weekday() == 2 or date2.weekday() == 3 or date2.weekday() == 4:
+                    output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
+        elif day_list[i] == "alldays":
+            for j in range(7):
+                output.append((datetime.datetime(new_year,i+1,j+1) - datetime.datetime(new_year,1,1)).days + 1)
+        for elem in day_list[i]:
+            if elem == "weekend":
+                for j in range(7):
+                    print(datetime.datetime(new_year,i+1,j+1))
+
+        #date2 = datetime.datetime(year,i+1,1)
+
+    output_dict = {"part1": part1, "part2": output}
     return json.dumps(output_dict)
