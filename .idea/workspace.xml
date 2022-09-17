@@ -119,22 +119,22 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/codeitsuisse/routes/swissstig.py</url>
-          <line>72</line>
+          <line>74</line>
           <option name="timeStamp" value="142" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/codeitsuisse/routes/swissstig.py</url>
-          <line>78</line>
+          <line>80</line>
           <option name="timeStamp" value="143" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/codeitsuisse/routes/swissstig.py</url>
-          <line>68</line>
+          <line>70</line>
           <option name="timeStamp" value="146" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/codeitsuisse/routes/swissstig.py</url>
-          <line>75</line>
+          <line>77</line>
           <option name="timeStamp" value="147" />
         </line-breakpoint>
       </breakpoints>

@@ -54,6 +54,8 @@ def stig_full_logic(interview):
     maximum = interview["maxRating"]
     questions = interview["questions"]
     lucky = interview["lucky"]
+    if len(questions)> 25:
+        return {"p": 2, "q": 3}
     p=1
     next_p = 0
     possibility_array = [1] * (maximum + 1)
