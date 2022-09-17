@@ -69,11 +69,13 @@ def stig_full_logic(interview):
         for real_value in range(1,maximum+1):
             first_arg = f(questions[question_id]["lower"])
             second_arg = f(questions[question_id]["upper"])
-            if first_arg <= real_value <= second_arg:
-                possibility_array[real_value].KeepRange(min(first_arg,second_arg),max(first_arg,second_arg))
+            small = min(first_arg,second_arg)
+            big = max(first_arg,second_arg)
+            if small <= real_value <= big:
+                possibility_array[real_value].KeepRange(small,big)
             else:
-                possibility_array[real_value].RemoveRange(min(first_arg,second_arg),max(first_arg,second_arg))
-            if possibility_array[real_value].head.data == real_value:
+                possibility_array[real_value].RemoveRange(small,big)
+            if possibility_array[real_value] == real_value:
                 next_p += 1
         gcd = math.gcd(next_p,maximum)
         p = int(next_p / gcd)
