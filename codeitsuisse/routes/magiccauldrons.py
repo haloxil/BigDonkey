@@ -80,12 +80,12 @@ def cauldron_logic(stream: list):
     part1raw = 1.0*(get_water(stream["part1"]["row_number"],stream["part1"]["col_number"],stream["part1"]["flow_rate"]*stream["part1"]["time"]))
     output_dict["part1"] = round(min(part1raw,100.0),2)
     store = [[-1] * (i+1) for i in range(stream["part2"]["row_number"]+1)]
-    output_dict["part2"] = bin_search(stream)
+    output_dict["part2"] = int(bin_search(stream))
     store = [[-1] * (i+1) for i in range(stream["part3"]["row_number"]+1)]
     part3raw = 1.0*(get_water_lopsided(stream["part3"]["row_number"],stream["part3"]["col_number"],stream["part3"]["flow_rate"]*stream["part3"]["time"]))
     output_dict["part3"] = round(min(part3raw,150.0) if stream["part3"]["col_number"]%2 == 0 else min(part3raw,100.0),2)
     store = [[-1] * (i+1) for i in range(stream["part4"]["row_number"]+1)]
-    output_dict["part4"] = bin_search_lopsided(stream)
+    output_dict["part4"] = int(bin_search_lopsided(stream))
     return output_dict
 
 
