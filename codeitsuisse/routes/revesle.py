@@ -1,8 +1,25 @@
 from random import Random, random, randrange
 import re
-guesses = 0
 
+import logging
+import json
+
+from flask import request, Response
+from codeitsuisse import app
+
+guesses = 0
 rand_ele = lambda x: x[randrange(0,len(x))]
+@app.route('/reversle', methods=['POST'])
+def evaluate_reversle():
+    data = request.get_json()
+    eqn_len = data["equationLength"]
+    attempts = data["attemptsAllowed"]
+    output = guess(attempts,eqn_len,
+                   data["equationHistory"] if "equationHistory" in data else None,
+                   data["resultHistory"] if "resultHistory" in data else None)
+    return Response(json.dumps({"equation":output}), mimetype='application/json')
+    
+
 
 def eval_stack_eqn(inp): #Evaluates a number from a stack.
     stack = []
@@ -64,34 +81,52 @@ def generate_possiblity_space(len):
         output.append(current)
         
     return output
-   
-   
-   
-     
-    
-#Current dumb solution: Makes 5 random guesses to cut down solution space
+#Current dumb solution: Makes random guesses till 5 left to cut down solution space
 
 def update_knowledge(space, guess, result):
-    
-    pass
-
-
-def make_guess(space, length):
-    
-    random_guesses = []
-    if guesses <5:
-        for x in range(50):
-            random_guesses.append(exploration_mode(space,length))
+    for index,ele in enumerate(result):
+        if ele == "0": #Symbol Not Present
+            for indexi,elei in enumerate(space):
+                for indexj,elej in enumerate(elei):
+                    space[indexi][indexj] = space[indexi][indexj].replace(guess[index],"")
             
-    return max(random_guesses,key = eval_fn)
+        elif ele == "1":#Symbol present, but not here
+            for indexi,elei in enumerate(space[index]):
+                if guess[index] in elei:
+                    space[index][indexi] = space[index][indexi].replace(guess[index],"")
+        elif ele == "2": #THIS IS THE SYMBOL
+            for indexi,elei in enumerate(space[index]):
+                if guess[index] in elei:
+                    space[index][indexi] = guess[index]
+                else:
+                    space[index][indexi] = ""
+    return space
+
+
+def guess(attempts,length, eqn_History, res_History):
+    possiblity_space = generate_possiblity_space(length)
+    if attempts >5:
+        random_guesses = []
+        #Exploration
+        for x in range(50):
+            random_guesses.append(make_guess(possiblity_space,length))
+        return max(random_guesses,key = eval_fn)
+    else:
+        #Exploitation
+        #cut down sln space
+        space = generate_possiblity_space(length)
+        for x in range(len(eqn_History)):
+            space = update_knowledge(space, eqn_History[x], res_History[x])
+    
+        return make_guess(space,length)
+            
+    
 
 def eval_fn(guess):
     return len(set(guess))
 
-
-
-def exploration_mode(space, length):
-    #Exploration mode until guess = 5.
+def make_guess(space, length):
+    #Exploitation mode until guess = 5.
     used = set()
     attempts = 5
     
@@ -121,24 +156,28 @@ def exploration_mode(space, length):
                     (pending_digits > 0 and randrange(0,2) == 0):
                 pending_digits -= 1
                 current_num_in_stack += 1
+                if len(space[x][0]) == 0:
+                    return make_guess(space,length)
                 this_symbol = roll_unused_symbol(space[x][0])
                 used.add(this_symbol)
                 output += [this_symbol]
                 continue
             else:
                 current_num_in_stack -= 1
+                if len(space[x][1]) == 0:
+                    return make_guess(space,length)
                 this_symbol = roll_unused_symbol(space[x][1])
                 used.add(this_symbol)
                 output += [this_symbol]
                 continue
         else:
             eqn_eval =  eval_stack_eqn(output)
-            if eqn_eval == None or eqn_eval % 1 != 0 or eqn_eval < 0 or len(str(eqn_eval)) > length - num_digits_ops - 1: 
+            if eqn_eval == None or isinstance(eqn_eval, complex) or eqn_eval % 1 != 0 or eqn_eval < 0 or len(str(eqn_eval)) > length - num_digits_ops - 1: 
                 #Divide by 0 or non int result or neg result or long result
-                return exploration_mode(space,length) #Reroll
+                return make_guess(space,length) #Reroll
             else:
                 ans_len = length - num_digits_ops
-                rest_of_eqn = "=" + ('{:0>'+str(ans_len)+'}').format(int(eqn_eval)) #Left pad ans with 0s
+                rest_of_eqn = "=" + ('{:0>'+str(ans_len - 1)+'}').format(int(eqn_eval)) #Left pad ans with 0s
                 output.extend(rest_of_eqn)
                 return output
             
