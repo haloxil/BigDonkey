@@ -30,8 +30,8 @@ def evaluate_rubiks():
         op_list.append(ops[len(ops) - 1])
 
     for elem in op_list:
-        # if elem == "U":
-        #     u(state)
+        if elem == "U":
+            u(state)
         if elem == "Ui":
             ui(state)
         if elem == "L":
@@ -153,13 +153,15 @@ def bi(state):
         state['l'][i][0] = int(temp2[i])
         state['u'][0][i] = int(temp3[i])
 
-# def u(state):
-#     state['u'] = np.rot90(np.array(state['u']), 3).tolist()
-#     temp = state['l'][0]
-#     state['l'][0] = state['f'][0]
-#     state['f'][0] = state['r'][0]
-#     state['r'][0] = state['b'][0]
-#     state['b'][0] = temp
+def u(state):
+    state['u'] = np.rot90(np.array(state['u']), 3).tolist()
+    temp = state['l'][0]
+    temp2 = state['b'][0]
+    temp3 = state['r'][0]
+    state['l'][0] = state['f'][0]
+    state['b'][0] = temp
+    state['r'][0] = temp2
+    state['f'][0] = temp3
 
 def ui(state):
     state['u'] = np.rot90(np.array(state['u']), 1).tolist()
