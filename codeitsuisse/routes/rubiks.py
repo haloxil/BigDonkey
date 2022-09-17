@@ -50,8 +50,8 @@ def evaluate_rubiks():
             r(state)
         if elem == "Ri":
             ri(state)
-        if elem == "D":
-            d(state)
+        # if elem == "D":
+        #     d(state)
         if elem == "Di":
             di(state)
 
@@ -173,15 +173,15 @@ def ui(state):
     state['b'][0] = temp2
     state['l'][0] = temp3
 
-def d(state):
-    state['d'] = np.rot90(np.array(state['d']), 3).tolist()
-    temp = state['f'][2]
-    temp2 = state['r'][2]
-    temp3 = state['b'][2]
-    state['f'][2] = state['l'][2]
-    state['r'][2] = temp
-    state['b'][2] = temp2
-    state['l'][2] = temp3
+# def d(state):
+#     state['d'] = np.rot90(np.array(state['d']), 3).tolist()
+#     temp = state['f'][2]
+#     temp2 = state['r'][2]
+#     temp3 = state['b'][2]
+#     state['f'][2] = state['l'][2]
+#     state['r'][2] = temp
+#     state['b'][2] = temp2
+#     state['l'][2] = temp3
 
 def di(state):
     state['d'] = np.rot90(np.array(state['d']), 1).tolist()
