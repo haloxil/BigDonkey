@@ -152,61 +152,64 @@ def eval_fn_exploration(guess):
     return len(set(guess))
 
 def make_guess(space, length):
-    #Exploitation mode until guess = 5.
-    used = set()
-    attempts = 5
-    
-    def roll_unused_symbol(arr):
-        this_symbol = rand_ele(arr)
-        for x in range(attempts):
-            if this_symbol in used:
-                this_symbol = rand_ele(arr)
-            else:
-                break
-        return this_symbol
-    
-    output = []
-    eq_locs = []
-    for index,ele in enumerate(space):
-        if "=" in ele[-1]:
-            eq_locs += [index]
+    try:
+        #Exploitation mode until guess = 5.
+        used = set()
+        attempts = 5
+        
+        def roll_unused_symbol(arr):
+            this_symbol = rand_ele(arr)
+            for x in range(attempts):
+                if this_symbol in used:
+                    this_symbol = rand_ele(arr)
+                else:
+                    break
+            return this_symbol
+        
+        output = []
+        eq_locs = []
+        for index,ele in enumerate(space):
+            if "=" in ele[-1]:
+                eq_locs += [index]
 
-    num_digits_ops = rand_ele(eq_locs)
-    
-    pending_digits = num_digits_ops // 2 + 1
-    current_num_in_stack = 0
-    
+        num_digits_ops = rand_ele(eq_locs)
+        
+        pending_digits = num_digits_ops // 2 + 1
+        current_num_in_stack = 0
+        
 
-    for x in range(length):
-        if x < num_digits_ops:
-            if current_num_in_stack < 2 or \
-                    (pending_digits > 0 and randrange(0,2) == 0):
-                pending_digits -= 1
-                current_num_in_stack += 1
-                if len(space[x][0]) == 0:
-                    return make_guess(space,length)
-                this_symbol = roll_unused_symbol(space[x][0])
-                used.add(this_symbol)
-                output += [this_symbol]
-                continue
+        for x in range(length):
+            if x < num_digits_ops:
+                if current_num_in_stack < 2 or \
+                        (pending_digits > 0 and randrange(0,2) == 0):
+                    pending_digits -= 1
+                    current_num_in_stack += 1
+                    if len(space[x][0]) == 0:
+                        return make_guess(space,length)
+                    this_symbol = roll_unused_symbol(space[x][0])
+                    used.add(this_symbol)
+                    output += [this_symbol]
+                    continue
+                else:
+                    current_num_in_stack -= 1
+                    if len(space[x][1]) == 0:
+                        return make_guess(space,length)
+                    this_symbol = roll_unused_symbol(space[x][1])
+                    used.add(this_symbol)
+                    output += [this_symbol]
+                    continue
             else:
-                current_num_in_stack -= 1
-                if len(space[x][1]) == 0:
-                    return make_guess(space,length)
-                this_symbol = roll_unused_symbol(space[x][1])
-                used.add(this_symbol)
-                output += [this_symbol]
-                continue
-        else:
-            eqn_eval =  eval_stack_eqn(output)
-            if eqn_eval == None or isinstance(eqn_eval, complex) or eqn_eval % 1 != 0 or eqn_eval < 0 or len(str(eqn_eval)) > length - num_digits_ops - 1: 
-                #Divide by 0 or non int result or neg result or long result
-                return make_guess(space,length) #Reroll
-            else:
-                ans_len = length - num_digits_ops
-                rest_of_eqn = "=" + ('{:0>'+str(ans_len - 1)+'}').format(int(eqn_eval)) #Left pad ans with 0s
-                output.extend(rest_of_eqn)
-                return output
+                eqn_eval =  eval_stack_eqn(output)
+                if eqn_eval == None or isinstance(eqn_eval, complex) or eqn_eval % 1 != 0 or eqn_eval < 0 or len(str(eqn_eval)) > length - num_digits_ops - 1: 
+                    #Divide by 0 or non int result or neg result or long result
+                    return make_guess(space,length) #Reroll
+                else:
+                    ans_len = length - num_digits_ops
+                    rest_of_eqn = "=" + ('{:0>'+str(ans_len - 1)+'}').format(int(eqn_eval)) #Left pad ans with 0s
+                    output.extend(rest_of_eqn)
+                    return output
+    except Exception:
+        return make_guess(space,length)
             
             
 
