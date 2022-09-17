@@ -14,27 +14,20 @@ def evaluate_crypto():
     output = []
     for data_list in data:
         for elem in data_list:
-            if (elem & (elem-1) == 0) and elem != 0:
-                output.append(elem)
-            else:   
-                num = elem
-                max = num
-                while (elem > 0):
-                    if num % 2 == 0:
-                        num /= 2
-                    else:
-                        num = int(num * 3 + 1)
-                        if (num & (num-1) == 0) and num != 0:
-                            max = num
-                            break
-                    elem -= 1
-
-                    if num > max:
-                        max = num
-
-                output.append(int(max))
-                
+            output.append(crypto(elem))              
         final_output.append(output)
         output = []
     return json.dumps(final_output)
-    
+
+def collatz(number):
+    if number % 2 == 0:
+        return number // 2
+    else:
+        return (3 * number) + 1
+
+def crypto(n):
+    max_num = 0
+    while n != 1:
+        max_num = max(n, max_num)
+        n = collatz(int(n))
+    return max_num
