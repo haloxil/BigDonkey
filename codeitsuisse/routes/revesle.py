@@ -86,10 +86,15 @@ def generate_possiblity_space(len):
 def update_knowledge(space, guess, result):
     for index,ele in enumerate(result):
         if ele == "0": #Symbol Not Present
-            for indexi,elei in enumerate(space):
-                for indexj,elej in enumerate(elei):
-                    space[indexi][indexj] = space[indexi][indexj].replace(guess[index],"")
-            
+            #If is unique i will know that it doesnt exist at all.
+            if guess.count(ele) == 1:
+                for indexi,elei in enumerate(space):
+                    for indexj,elej in enumerate(elei):
+                        space[indexi][indexj] = space[indexi][indexj].replace(guess[index],"")
+            else: #At least we know its not here
+                for indexi,elei in enumerate(space[index]):
+                    if guess[index] in elei:
+                        space[index][indexi] = space[index][indexi].replace(guess[index],"")
         elif ele == "1":#Symbol present, but not here
             for indexi,elei in enumerate(space[index]):
                 if guess[index] in elei:
@@ -110,19 +115,29 @@ def guess(attempts,length, eqn_History, res_History):
         #Exploration
         for x in range(50):
             random_guesses.append(make_guess(possiblity_space,length))
-        return max(random_guesses,key = eval_fn)
+        return max(random_guesses,key = eval_fn_exploration)
     else:
         #Exploitation
         #cut down sln space
         space = generate_possiblity_space(length)
         for x in range(len(eqn_History)):
             space = update_knowledge(space, eqn_History[x], res_History[x])
-    
-        return make_guess(space,length)
-            
-    
+        random_guesses = []
+        #Exploration
+        eval_fn = lambda x: eval_fn_exploitation(space,x)
+        for x in range(50):
+            random_guesses.append(make_guess(space,length))
+        return max(random_guesses,key = eval_fn)
+        
+def eval_fn_exploitation(space,guess):
+    score = 0
+    for index,ele in enumerate(guess):
+        if ele in "".join(space[index]):
+            score += 1
+    return score
 
-def eval_fn(guess):
+
+def eval_fn_exploration(guess):
     return len(set(guess))
 
 def make_guess(space, length):
@@ -182,8 +197,7 @@ def make_guess(space, length):
                 return output
             
             
-            
-        
+
     
     
 
