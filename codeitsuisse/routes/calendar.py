@@ -36,45 +36,59 @@ def evaluate_calendar():
 
     date_list = list(date_dic.keys())
     date_list.sort()
+
+    temp = ""
     for key in date_list:
         while count != 13:
             if key != count:
                 part1 += 7 * " " + ","
-            elif "0" in date_dic[key] and "1" in date_dic[key] and "2" in date_dic[key] and "3" in date_dic[key] and "4" in date_dic[key] and "5" in date_dic[key] and "6" in date_dic[key]:
-                part1 += "alldays,"
-            elif "0" in date_dic[key] and "1" in date_dic[key] and "2" in date_dic[key] and "3" in date_dic[key] and "4" in date_dic[key]:
-                part1 += "weekday,"
-            elif "5" in date_dic[key] and "6" in date_dic[key]:
-                part1 += "weekend,"
+            # elif "0" in date_dic[key] and "1" in date_dic[key] and "2" in date_dic[key] and "3" in date_dic[key] and "4" in date_dic[key] and "5" in date_dic[key] and "6" in date_dic[key]:
+            #     part1 += "alldays,"
+            # elif "0" in date_dic[key] and "1" in date_dic[key] and "2" in date_dic[key] and "3" in date_dic[key] and "4" in date_dic[key]:
+            #     part1 += "weekday,"
+            # elif "5" in date_dic[key] and "6" in date_dic[key]:
+            #     part1 += "weekend,"
             else:
+                print(date_dic[key])
                 if "0" in date_dic[key]:
-                    part1 += "m"
+                    temp += "m"
                 else:
-                    part1 += " "
+                    temp += " "
                 if "1" in date_dic[key]:
-                    part1 += "t"
+                    temp += "t"
                 else:
-                    part1 += " "
+                    temp += " "
                 if "2" in date_dic[key]:
-                    part1 += "w"
+                    temp += "w"
                 else:
-                    part1 += " "
+                    temp += " "
                 if "3" in date_dic[key]:
-                    part1 += "t"
+                    temp += "t"
                 else:
-                    part1 += " "
+                    temp += " "
                 if "4" in date_dic[key]:
-                    part1 += "f"
+                    temp += "f"
                 else:
-                    part1 += " "
+                    temp += " "
                 if "5" in date_dic[key]:
-                    part1 += "s"
+                    temp += "s"
                 else:
-                    part1 += " "
+                    temp += " "
                 if "6" in date_dic[key]:
-                    part1 += "s"
+                    temp += "s"
                 else:
-                    part1 += " "
+                    temp += " "
+
+                if temp == "mtwtfss":
+                    part1 += "alldays"
+                elif temp == "mtwtf  ":
+                    part1 += "weekday"
+                elif temp == "     ss":
+                    part1 += "weekend"
+                else:
+                    part1 += temp
+                
+                temp = ""
                 part1 += ","
 
             count += 1
