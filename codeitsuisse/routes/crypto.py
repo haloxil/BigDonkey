@@ -1,7 +1,7 @@
 import logging
 import json
 
-from flask import request, jsonify
+from flask import request, Response
 
 from codeitsuisse import app
 
@@ -14,15 +14,16 @@ def evaluate_crypto():
     data = request.get_json()
     final_output = []
     output = []
-    return json.dumps([[1,2,3,4],[5,6,7,8]])
-    #for data_list in data:
-    #    for elem in data_list:
-    #        max = crypto(elem)
-    #        memo_dict[elem] = max
-    #        output.append(max)
-    #    final_output.append(output)
-    #    output = []
-    #return json.dumps(final_output)
+
+
+    for data_list in data:
+        for elem in data_list:
+            max = crypto(elem)
+            memo_dict[elem] = max
+            output.append(max)
+        final_output.append(output)
+        output = []
+    return Response(json.dumps(final_output), mimetype='application/json')
 
 def collatz(number):
     if number % 2 == 0:
