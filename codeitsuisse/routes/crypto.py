@@ -26,6 +26,8 @@ def collatz(number):
         return (3 * number) + 1
 
 def crypto(n):
+    if n == 1:
+        return 4
     max_num = 0
     while n != 1:
         max_num = max(n, max_num)
