@@ -2,6 +2,7 @@ import logging
 import json
 import queue
 import heapq
+import math
 import pyjson5
 
 from flask import request, Response
@@ -40,7 +41,8 @@ def stig_warmup_logic(interview):
             p += 1
         elif min(possible_values) == real_value:
             p += 1
-    return {"p": p, "q": max}
+    gcd = math.gcd(p,max)
+    return {"p": int(p / gcd), "q": int(max / gcd)}
 
 @app.route('/stig/full', methods=['POST'])
 def stig_full():
