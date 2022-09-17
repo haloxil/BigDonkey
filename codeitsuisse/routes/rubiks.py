@@ -118,7 +118,7 @@ def f(state):
         state['u'][2][i] = int(temp3[i])
 
 def fi(state):
-    state['f'] = np.rot90(np.array(state['f']), 3).tolist()
+    state['f'] = np.rot90(np.array(state['f']), 1).tolist()
     temp = np.array(state['l'])[:,2]
     temp2 = np.array(state['d'])[0,:]
     temp3 = np.array(state['r'])[:,0]
@@ -142,7 +142,7 @@ def b(state):
         state['u'][0][i] = int(temp3[i])
 
 def bi(state):
-    state['b'] = np.rot90(np.array(state['b']), 3).tolist()
+    state['b'] = np.rot90(np.array(state['b']), 1).tolist()
     temp = np.array(state['r'])[:,2]
     temp2 = np.array(state['d'])[2,:]
     temp3 = np.array(state['l'])[:,0]
