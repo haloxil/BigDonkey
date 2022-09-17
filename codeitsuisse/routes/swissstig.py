@@ -75,7 +75,7 @@ def stig_full_logic(interview):
                 possibility_array[real_value].KeepRange(small,big)
             else:
                 possibility_array[real_value].RemoveRange(small,big)
-            if possibility_array[real_value] == real_value:
+            if possibility_array[real_value].head.data == real_value:
                 next_p += 1
         gcd = math.gcd(next_p,maximum)
         p = int(next_p / gcd)
