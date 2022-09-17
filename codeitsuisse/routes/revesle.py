@@ -119,7 +119,7 @@ def guess(attempts,length, eqn_History, res_History):
     if attempts >3:
         random_guesses = []
         #Exploration
-        for x in range(50):
+        for x in range(500):
             random_guesses.append(make_guess(possiblity_space,length))
         return max(random_guesses,key = eval_fn_exploration)
     else:
@@ -132,7 +132,7 @@ def guess(attempts,length, eqn_History, res_History):
         random_guesses = []
         #Exploration
         eval_fn = lambda x: eval_fn_exploitation(space,x)
-        for x in range(50):
+        for x in range(500):
             random_guesses.append(make_guess(space,length))
         return max(random_guesses,key = eval_fn)
         
