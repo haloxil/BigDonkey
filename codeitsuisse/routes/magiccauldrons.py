@@ -70,7 +70,7 @@ def cauldron_logic(stream: list):
             return lo
         elif (get_water_lopsided(stream["part4"]["row_number"],stream["part4"]["col_number"],stream["part4"]["flow_rate"]*hi) == stream["part4"]["amount_of_soup"]):
             return hi
-        else: return hi
+        else: return lo
 
     part1raw = 1.0*(get_water(stream["part1"]["row_number"],stream["part1"]["col_number"],stream["part1"]["flow_rate"]*stream["part1"]["time"]))
     output_dict["part1"] = min(part1raw,100.0)
