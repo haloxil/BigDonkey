@@ -42,6 +42,10 @@ def evaluate_rubiks():
             f(state)
         if elem == "Fi":
             fi(state)
+        if elem == "B":
+            f(state)
+        if elem == "Bi":
+            fi(state)
         if elem == "R":
             r(state)
         if elem == "Ri":
@@ -124,6 +128,30 @@ def fi(state):
         state['d'][0][i] = int(temp[i])
         state['r'][i][0] = int(temp2[i])
         state['u'][2][i] = int(temp3[i])
+
+def b(state):
+    state['b'] = np.rot90(np.array(state['b']), 3).tolist()
+    temp = np.array(state['l'])[:,0]
+    temp2 = np.array(state['d'])[2,:]
+    temp3 = np.array(state['r'])[:,2]
+
+    for i in range(3):
+        state['l'][i][0] = state['u'][0][i]
+        state['d'][2][i] = int(temp[i])
+        state['r'][i][2] = int(temp2[i])
+        state['u'][0][i] = int(temp3[i])
+
+def bi(state):
+    state['b'] = np.rot90(np.array(state['b']), 3).tolist()
+    temp = np.array(state['r'])[:,2]
+    temp2 = np.array(state['d'])[2,:]
+    temp3 = np.array(state['l'])[:,0]
+
+    for i in range(3):
+        state['r'][i][2] = state['u'][0][i]
+        state['d'][2][i] = int(temp[i])
+        state['l'][i][0] = int(temp2[i])
+        state['u'][0][i] = int(temp3[i])
 
 def u(state):
     state['u'] = np.rot90(np.array(state['u']), 3).tolist()
