@@ -34,12 +34,31 @@ def evaluate_rubiks():
             u(state)
         if elem == "Ui":
             ui(state)
+        if elem == "L":
+            l(state)
+        if elem == "Li":
+            li(state)
         if elem == "D":
             d(state)
         if elem == "Di":
             di(state)
 
     return json.dumps(state)
+
+def l(state):
+    state['l'] = np.rot90(np.array(state['l']), 3).tolist()
+    temp = np.array(state['u'])[:,0]
+    temp2 = np.array(state['f'])[:,0]
+    temp3 = np.array(state['d'])[:,0]
+
+    for i in range(3):
+        state['u'][0][i] = state['b'][0][i]
+        state['f'][0][i] = int(temp[i])
+        state['d'][0][i] = int(temp2[i])
+        state['b'][0][i] = int(temp3[i])
+
+def li(state):
+    state['l'] = np.array(state['l']).transpose().tolist()
 
 def u(state):
     state['u'] = np.rot90(np.array(state['u']), 3).tolist()
