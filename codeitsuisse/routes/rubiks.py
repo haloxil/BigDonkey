@@ -31,7 +31,7 @@ def evaluate_rubiks():
 
     for elem in op_list:
         if elem == "U":
-            state['u'] = np.rot90(np.array(state['u']), 3).tolist()
+            u(state)
         if elem == "Ui":
             ui(state)
         if elem == "D":
@@ -40,6 +40,14 @@ def evaluate_rubiks():
             di(state)
 
     return json.dumps(state)
+
+def u(state):
+    state['u'] = np.rot90(np.array(state['u']), 3).tolist()
+    temp = state['l'][0]
+    state['l'][0] = state['f'][0]
+    state['f'][0] = state['r'][0]
+    state['r'][0] = state['b'][0]
+    state['b'][0] = temp
 
 def ui(state):
     state['u'] = np.array(state['u']).transpose().tolist()
