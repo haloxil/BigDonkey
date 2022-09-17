@@ -78,10 +78,6 @@ def evaluate_calendar():
 
             if temp == "mtwtfss":
                 part1 += "alldays"
-            elif temp == "mtwtfs ":
-                part1 += "weekday"
-            elif temp == "mtwtf s":
-                part1 += "weekday"
             elif temp == "mtwtf  ":
                 part1 += "weekday"
             elif temp == "     ss":
