@@ -7,17 +7,6 @@ from flask import request, jsonify
 
 from codeitsuisse import app
 
-class RoundingFloat(float): #nabbed encoder for float formatting
-    __repr__ = staticmethod(lambda x: format(x, '.2f'))
-
-json.encoder.c_make_encoder = None
-if hasattr(json.encoder, 'FLOAT_REPR'):
-    # Python 2
-    json.encoder.FLOAT_REPR = RoundingFloat.__repr__
-else:
-    # Python 3
-    json.encoder.float = RoundingFloat
-
 logger = logging.getLogger(__name__)
 @app.route('/hello', methods=['GET'])
 def default_routeCauldron():
@@ -58,7 +47,7 @@ def cauldron_logic(stream: list):
         if(col < 0 or col>row): return 150.0 if(col%2 == 0) else 100.0
         if(store[row][col] != -1): return store[row][col]
         if(row == 0): return initial_water
-        store[row][col] = (get_water(row-1,col-1,initial_water)-(100.0 if col%2 == 0 else 150.0) + get_water(row-1,col,initial_water)-(150.0 if col%2 == 0 else 100.0))/2.0
+        store[row][col] = (get_water_lopsided(row-1,col-1,initial_water)-(100.0 if col%2 == 0 else 150.0) + get_water_lopsided(row-1,col,initial_water)-(150.0 if col%2 == 0 else 100.0))/2.0
         return store[row][col]
     def bin_search_lopsided(stream):
         lo = 0
@@ -73,11 +62,14 @@ def cauldron_logic(stream: list):
         elif (get_water_lopsided(stream["part4"]["row_number"],stream["part4"]["col_number"],stream["part4"]["flow_rate"]*hi) == stream["part4"]["amount_of_soup"]):
             return hi
         else: print("could not find possible timing!!!")
-    output_dict["part1"] = 1.0*(get_water(stream["part1"]["row_number"],stream["part1"]["col_number"],stream["part1"]["flow_rate"]*stream["part1"]["time"]))
+
+    part1raw = 1.0*(get_water(stream["part1"]["row_number"],stream["part1"]["col_number"],stream["part1"]["flow_rate"]*stream["part1"]["time"]))
+    output_dict["part1"] = min(part1raw,100.0)
     store = [[-1] * (i+1) for i in range(stream["part2"]["row_number"]+1)]
     output_dict["part2"] = int(bin_search(stream))
     store = [[-1] * (i+1) for i in range(stream["part3"]["row_number"]+1)]
-    output_dict["part3"] = 1.0*(get_water_lopsided(stream["part3"]["row_number"],stream["part3"]["col_number"],stream["part3"]["flow_rate"]*stream["part3"]["time"]))
+    part3raw = 1.0*(get_water_lopsided(stream["part3"]["row_number"],stream["part3"]["col_number"],stream["part3"]["flow_rate"]*stream["part3"]["time"]))
+    output_dict["part3"] = min(part3raw,150.0) if stream["part3"]["col_number"]%2 == 0 else min(part3raw,100.0)
     store = [[-1] * (i+1) for i in range(stream["part4"]["row_number"]+1)]
     output_dict["part4"] = int(bin_search_lopsided(stream))
     return output_dict
