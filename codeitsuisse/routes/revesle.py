@@ -29,40 +29,44 @@ def evaluate_reversle():
 
 def eval_stack_eqn(inp): #Evaluates a number from a stack.
     stack = []
-    
-    local_inp = inp[::-1]
-    while(len(local_inp) > 0):
-        nextChar = local_inp.pop()
-        if re.match("[0-9]",nextChar): #Regex check for int
-            stack.append(int(nextChar))
-            continue
-        else:
-            if nextChar == "=":
-                break; 
-            
-            num1 = stack.pop()
-            num2 = stack.pop()
-            if nextChar == "*":
-                stack.append(num1 * num2)
-            elif nextChar == "+":
-                stack.append(num1 + num2)
-            elif nextChar == "-":
-                stack.append(num2 - num1)
-            elif nextChar == "/":
-                if num1 == 0: #Divided by 0
-                    return None
-                else:
-                    stack.append(num2/num1)
-            elif nextChar == "\\":
-                if num2 == 0:
-                    return None #Divided by 0
-                else:
-                    stack.append(num1/num2)
-            elif nextChar == "^":
-                if num2 == 0 and num1 < 0:
-                    return None
-                stack.append(num2**num1)
-    return stack.pop()
+    try:
+        local_inp = inp[::-1]
+        while(len(local_inp) > 0):
+            nextChar = local_inp.pop()
+            if re.match("[0-9]",nextChar): #Regex check for int
+                stack.append(int(nextChar))
+                continue
+            else:
+                if nextChar == "=":
+                    break;
+
+                num1 = stack.pop()
+                num2 = stack.pop()
+                if nextChar == "*":
+                    stack.append(num1 * num2)
+                elif nextChar == "+":
+                    stack.append(num1 + num2)
+                elif nextChar == "-":
+                    stack.append(num2 - num1)
+                elif nextChar == "/":
+                    if num1 == 0: #Divided by 0
+                        return None
+                    else:
+                        stack.append(num2/num1)
+                elif nextChar == "\\":
+                    if num2 == 0:
+                        return None #Divided by 0
+                    else:
+                        stack.append(num1/num2)
+                elif nextChar == "^":
+                    if num2 == 0 and num1 < 0:
+                        return None
+                    stack.append(num2**num1)
+    except OverflowError as err:
+        return None
+    if len(stack) > 0:
+        return stack.pop()
+    return None
 
 def generate_possiblity_space(len):
     # Assumptions
