@@ -23,7 +23,10 @@ def evaluate_crypto():
                     if num % 2 == 0:
                         num /= 2
                     else:
-                        num = num * 3 + 1
+                        num = int(num * 3 + 1)
+                        if (num & (num-1) == 0) and num != 0:
+                            max = num
+                            break
                     elem -= 1
 
                     if num > max:
