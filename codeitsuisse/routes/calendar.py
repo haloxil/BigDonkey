@@ -109,20 +109,60 @@ def evaluate_calendar():
                 date2 = datetime.datetime(new_year,i+1,j+1)
                 if date2.weekday() == 5 or date2.weekday() == 6:
                     output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
+            continue
         elif day_list[i] == "weekday":
             for j in range(7):
                 date2 = datetime.datetime(new_year,i+1,j+1)
                 if date2.weekday() == 0 or date2.weekday() == 1 or date2.weekday() == 2 or date2.weekday() == 3 or date2.weekday() == 4:
                     output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
+            continue
         elif day_list[i] == "alldays":
             for j in range(7):
                 output.append((datetime.datetime(new_year,i+1,j+1) - datetime.datetime(new_year,1,1)).days + 1)
-        for elem in day_list[i]:
-            if elem == "weekend":
+            continue
+        for k in range(len(day_list[i])):
+            if day_list[i][k] == "m":
                 for j in range(7):
-                    print(datetime.datetime(new_year,i+1,j+1))
+                    date2 = datetime.datetime(new_year,i+1,j+1)
+                    if date2.weekday() == 0:
+                        output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
 
-        #date2 = datetime.datetime(year,i+1,1)
+            if day_list[i][k] == "t" and k == 1:
+                for j in range(7):
+                    date2 = datetime.datetime(new_year,i+1,j+1)
+                    if date2.weekday() == 1:
+                        output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
+
+            if day_list[i][k] == "w":
+                for j in range(7):
+                    date2 = datetime.datetime(new_year,i+1,j+1)
+                    if date2.weekday() == 2:
+                        output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
+
+            if day_list[i][k] == "t" and k == 3:
+                for j in range(7):
+                    date2 = datetime.datetime(new_year,i+1,j+1)
+                    if date2.weekday() == 3:
+                        output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
+
+            if day_list[i][k] == "f":
+                for j in range(7):
+                    date2 = datetime.datetime(new_year,i+1,j+1)
+                    if date2.weekday() == 4:
+                        output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
+
+            if day_list[i][k] == "s" and k == 5:
+                for j in range(7):
+                    date2 = datetime.datetime(new_year,i+1,j+1)
+                    if date2.weekday() == 5:
+                        output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
+
+            if day_list[i][k] == "s" and k == 6:
+                for j in range(7):
+                    date2 = datetime.datetime(new_year,i+1,j+1)
+                    if date2.weekday() == 6:
+                        output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
+
 
     output_dict = {"part1": part1, "part2": output}
     return json.dumps(output_dict)
