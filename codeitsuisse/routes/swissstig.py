@@ -72,8 +72,7 @@ def stig_full_logic(interview):
                     possibility_array[real_value] = small
             else:
                 if possibility_array[real_value] > big: pass
-                elif possibility_array[real_value] <= big < real_value: possibility_array[real_value] = big + 1
-                elif possibility_array[real_value] < big <= real_value: possibility_array[real_value] = big
+                elif possibility_array[real_value] < big < real_value: possibility_array[real_value] = big
             if possibility_array[real_value] == real_value:
                 next_p += 1
         gcd = math.gcd(next_p,maximum)
