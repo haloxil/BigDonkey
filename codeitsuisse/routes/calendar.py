@@ -21,9 +21,12 @@ def evaluate_calendar():
 
     numbers = data["numbers"]
     year = numbers[0]
+    if is_leap_year(year):
+        max_years = 367
+    max_years = 366
 
-    for day in numbers[1:]: #never check leap year
-        if day <= 0 or day >= 366:
+    for day in numbers[1:]:
+        if day <= 0 or day >= max_years:
             continue
         date = datetime.datetime(year,1,1) + datetime.timedelta(day - 1)
         datem = date.strptime(str(date), "%Y-%m-%d %H:%M:%S")
@@ -161,6 +164,13 @@ def evaluate_calendar():
 
     output.sort()
     output.insert(0, new_year)
-    
+
     output_dict = {"part1": part1, "part2": output}
     return json.dumps(output_dict)
+
+def is_leap_year(year):
+    if (year % 400 == 0) and (year % 100 == 0):
+        return True
+    elif (year % 4 ==0) and (year % 100 != 0):
+        return True
+    return False
