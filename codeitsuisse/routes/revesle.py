@@ -120,8 +120,9 @@ def guess(attempts,length, eqn_History, res_History):
         #Exploitation
         #cut down sln space
         space = generate_possiblity_space(length)
-        for x in range(len(eqn_History)):
-            space = update_knowledge(space, eqn_History[x], res_History[x])
+        if eqn_History:
+            for x in range(len(eqn_History)):
+                space = update_knowledge(space, eqn_History[x], res_History[x])
         random_guesses = []
         #Exploration
         eval_fn = lambda x: eval_fn_exploitation(space,x)
