@@ -75,5 +75,5 @@ def evaluate_calendar():
 
             count += 1
 
-    output_dict = {"part1": [part1]}
+    output_dict = {"part1": [part1], "part2": []}
     return json.dumps(output_dict)
