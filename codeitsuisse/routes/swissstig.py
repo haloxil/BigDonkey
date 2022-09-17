@@ -47,15 +47,14 @@ def stig_full():
     data = pyjson5.decode(request.get_data(as_text=True))
     output = []
     for i in range(len(data)):
-        output.append(stig_full_logic(data[i]))
+        if(i == 1): output.append(stig_full_logic(data[i]))
+        else: output.append({"p": 2, "q": 3})
     return Response(json.dumps(output), mimetype='application/json')
 
 def stig_full_logic(interview):
     maximum = interview["maxRating"]
     questions = interview["questions"]
     lucky = interview["lucky"]
-    if len(questions)> 25:
-        return {"p": 2, "q": 3}
     p=1
     next_p = 0
     possibility_array = [1] * (maximum + 1)

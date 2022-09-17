@@ -7,7 +7,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.py" beforeDir="false" afterPath="$PROJECT_DIR$/App.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TickerStream.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/codeitsuisse/routes/swissstig.py" beforeDir="false" afterPath="$PROJECT_DIR$/codeitsuisse/routes/swissstig.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -119,22 +118,22 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/codeitsuisse/routes/swissstig.py</url>
-          <line>74</line>
+          <line>73</line>
           <option name="timeStamp" value="142" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/codeitsuisse/routes/swissstig.py</url>
-          <line>80</line>
+          <line>79</line>
           <option name="timeStamp" value="143" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/codeitsuisse/routes/swissstig.py</url>
-          <line>70</line>
+          <line>69</line>
           <option name="timeStamp" value="146" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/codeitsuisse/routes/swissstig.py</url>
-          <line>77</line>
+          <line>76</line>
           <option name="timeStamp" value="147" />
         </line-breakpoint>
       </breakpoints>
