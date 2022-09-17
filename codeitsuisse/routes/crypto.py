@@ -6,7 +6,7 @@ from flask import request, Response
 from codeitsuisse import app
 
 logger = logging.getLogger(__name__)
-memo_dict = {}
+memo_dict = {1 : 4, 2 : 4 , 4 : 4}
 
 
 @app.route('/cryptocollapz', methods=['POST'])
@@ -14,16 +14,16 @@ def evaluate_crypto():
     data = request.get_json()
     final_output = []
     output = []
-    return Response(json.dumps([[1,2,3,4],[5,6,7,8]]), mimetype='application/json')
 
     for data_list in data:
         for elem in data_list:
-            max = crypto(elem)
-            memo_dict[elem] = max
-            output.append(max)
+            if elem not in memo_dict:
+                crypto(elem)
+            output.append(memo_dict[elem])
         final_output.append(output)
         output = []
-    return Response(json.dumps([[1,2,3,4],[5,6,7,8]]), mimetype='application/json')
+    return Response(json.dumps(final_output), mimetype='application/json')
+
 
 def collatz(number):
     if number % 2 == 0:
@@ -32,13 +32,8 @@ def collatz(number):
         return (3 * number) + 1
 
 def crypto(n):
-    if n == 1:
-        return 4
-    max_num = 0
-    while n != 1:
-        max_num = max(n, max_num)
-        n = collatz(int(n))
-        if n in memo_dict:
-            if memo_dict[n] > max_num:
-                return memo_dict[n]
-    return max_num
+    if n in memo_dict:
+        return memo_dict[n]
+    else:
+        crypto(collatz(n))
+        memo_dict[n] = max(n, memo_dict[collatz(n)])
