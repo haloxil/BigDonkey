@@ -1,3 +1,4 @@
+from curses.ascii import isspace
 import logging
 import json
 
@@ -20,9 +21,12 @@ def evaluate_calendar():
 
     numbers = data["numbers"]
     year = numbers[0]
+    if is_leap_year(year):
+        max_years = 367
+    max_years = 366
 
-    for day in numbers[1:]: #never check leap year
-        if day <= 0 or day >= 366:
+    for day in numbers[1:]:
+        if day <= 0 or day >= max_years:
             continue
         date = datetime.datetime(year,1,1) + datetime.timedelta(day - 1)
         datem = date.strptime(str(date), "%Y-%m-%d %H:%M:%S")
@@ -77,10 +81,6 @@ def evaluate_calendar():
 
             if temp == "mtwtfss":
                 part1 += "alldays"
-            elif temp == "mtwtfs ":
-                part1 += "weekday"
-            elif temp == "mtwtf s":
-                part1 += "weekday"
             elif temp == "mtwtf  ":
                 part1 += "weekday"
             elif temp == "     ss":
@@ -96,7 +96,79 @@ def evaluate_calendar():
 
         count += 1
 
-    year_count = part1.index(' ')
+    new_year = 2001 + part1.index(' ')
+    day_list = part1.split(",")
+    output = [new_year]
+    for i in range(len(day_list)):
+        if day_list[i].isspace():
+            continue
 
-    output_dict = {"part1": part1, "part2": [year_count + 2001]}
+        if day_list[i] == "weekend":
+            for j in range(7):
+                date2 = datetime.datetime(new_year,i+1,j+1)
+                if date2.weekday() == 5 or date2.weekday() == 6:
+                    output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
+            continue
+        elif day_list[i] == "weekday":
+            for j in range(7):
+                date2 = datetime.datetime(new_year,i+1,j+1)
+                if date2.weekday() == 0 or date2.weekday() == 1 or date2.weekday() == 2 or date2.weekday() == 3 or date2.weekday() == 4:
+                    output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
+            continue
+        elif day_list[i] == "alldays":
+            for j in range(6):
+                output.append((datetime.datetime(new_year,i+1,j+2) - datetime.datetime(new_year,1,1)).days + 1)
+            output.append((datetime.datetime(new_year,i+1,1) - datetime.datetime(new_year,1,1)).days + 1)
+            continue
+        for k in range(len(day_list[i])):
+            if day_list[i][k] == "m":
+                for j in range(7):
+                    date2 = datetime.datetime(new_year,i+1,j+1)
+                    if date2.weekday() == 0:
+                        output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
+
+            if day_list[i][k] == "t" and k == 1:
+                for j in range(7):
+                    date2 = datetime.datetime(new_year,i+1,j+1)
+                    if date2.weekday() == 1:
+                        output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
+
+            if day_list[i][k] == "w":
+                for j in range(7):
+                    date2 = datetime.datetime(new_year,i+1,j+1)
+                    if date2.weekday() == 2:
+                        output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
+
+            if day_list[i][k] == "t" and k == 3:
+                for j in range(7):
+                    date2 = datetime.datetime(new_year,i+1,j+1)
+                    if date2.weekday() == 3:
+                        output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
+
+            if day_list[i][k] == "f":
+                for j in range(7):
+                    date2 = datetime.datetime(new_year,i+1,j+1)
+                    if date2.weekday() == 4:
+                        output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
+
+            if day_list[i][k] == "s" and k == 5:
+                for j in range(7):
+                    date2 = datetime.datetime(new_year,i+1,j+1)
+                    if date2.weekday() == 5:
+                        output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
+
+            if day_list[i][k] == "s" and k == 6:
+                for j in range(7):
+                    date2 = datetime.datetime(new_year,i+1,j+1)
+                    if date2.weekday() == 6:
+                        output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
+
+    output_dict = {"part1": part1, "part2": output}
     return json.dumps(output_dict)
+
+def is_leap_year(year):
+    if (year % 400 == 0) and (year % 100 == 0):
+        return True
+    elif (year % 4 ==0) and (year % 100 != 0):
+        return True
+    return False
