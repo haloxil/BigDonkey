@@ -8,12 +8,13 @@ from codeitsuisse import app
 logger = logging.getLogger(__name__)
 memo_dict = {}
 
+
 @app.route('/cryptocollapz', methods=['POST'])
 def evaluate_crypto():
     data = request.get_json()
     final_output = []
     output = []
-
+    return data
     for data_list in data:
         for elem in data_list:
             max = crypto(elem)
