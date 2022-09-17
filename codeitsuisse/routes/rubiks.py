@@ -14,11 +14,65 @@ def evaluate_rubiks():
     data = request.get_json()
     ops = data["ops"]
     state = data["state"]
+    index = 0
+    op_list = []
 
-    op = "U"
-    if op == "U":
-        state['u'] = (np.array(state['u']).transpose).tolist()
+    while index < len(ops) - 1:
+        if ops[index+1] == 'i':
+            op = ops[index:index+2]
+            index += 2
+        else:
+            op = ops[index]
+            index += 1
+        op_list.append(op)
 
-    print(ops)
-    print(state)
-    return json.dumps("hello")
+    if ops[len(ops) - 1] != 'i':
+        op_list.append(ops[len(ops) - 1])
+
+    for elem in op_list:
+        if elem == "U":
+            u(state)
+        if elem == "Ui":
+            ui(state)
+        if elem == "D":
+            d(state)
+        if elem == "Di":
+            di(state)
+
+    return json.dumps(state)
+
+def u(state):
+    state['u'] = np.rot90(np.array(state['u']), 3).tolist()
+    temp = state['l'][0]
+    state['l'][0] = state['f'][0]
+    state['f'][0] = state['r'][0]
+    state['r'][0] = state['b'][0]
+    state['b'][0] = temp
+
+def ui(state):
+    state['u'] = np.array(state['u']).transpose().tolist()
+    temp = state['f'][0]
+    temp2 = state['r'][0]
+    temp3 = state['b'][0]
+    state['f'][0] = state['l'][0]
+    state['r'][0] = temp
+    state['b'][0] = temp2
+    state['l'][0] = temp3
+
+def d(state):
+    state['d'] = np.rot90(np.array(state['d']), 3).tolist()
+    temp = state['f'][2]
+    temp2 = state['r'][2]
+    temp3 = state['b'][2]
+    state['f'][2] = state['l'][2]
+    state['r'][2] = temp
+    state['b'][2] = temp2
+    state['l'][2] = temp3
+
+def di(state):
+    state['d'] = np.array(state['d']).transpose().tolist()
+    temp = state['l'][2]
+    state['l'][2] = state['f'][2]
+    state['f'][2] = state['r'][2]
+    state['r'][2] = state['b'][2]
+    state['b'][2] = temp
