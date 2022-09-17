@@ -38,10 +38,10 @@ def evaluate_rubiks():
             l(state)
         if elem == "Li":
             li(state)
-        # if elem == "F":
-        #     f(state)
-        # if elem == "Fi":
-        #     fi(state)
+        if elem == "F":
+            f(state)
+        if elem == "Fi":
+            fi(state)
         if elem == "R":
             r(state)
         if elem == "Ri":
@@ -60,10 +60,10 @@ def l(state):
     temp3 = np.array(state['d'])[:,0]
 
     for i in range(3):
-        state['u'][0][i] = state['b'][0][i]
-        state['f'][0][i] = int(temp[i])
-        state['d'][0][i] = int(temp2[i])
-        state['b'][0][i] = int(temp3[i])
+        state['u'][i][0] = state['b'][i][0]
+        state['f'][i][0] = int(temp[i])
+        state['d'][i][0] = int(temp2[i])
+        state['b'][i][0] = int(temp3[i])
 
 def li(state):
     state['l'] = np.rot90(np.array(state['l']), 1).tolist()
@@ -72,10 +72,10 @@ def li(state):
     temp3 = np.array(state['d'])[:,0]
 
     for i in range(3):
-        state['u'][0][i] = state['f'][0][i]
-        state['b'][0][i] = int(temp[i])
-        state['d'][0][i] = int(temp2[i])
-        state['f'][0][i] = int(temp3[i])
+        state['u'][i][0] = state['f'][i][0]
+        state['b'][i][0] = int(temp[i])
+        state['d'][i][0] = int(temp2[i])
+        state['f'][i][0] = int(temp3[i])
 
 def r(state):
     state['r'] = np.rot90(np.array(state['r']), 3).tolist()
@@ -84,10 +84,10 @@ def r(state):
     temp3 = np.array(state['f'])[:,2]
 
     for i in range(3):
-        state['b'][2][i] = state['u'][2][i]
-        state['d'][2][i] = int(temp[i])
-        state['f'][2][i] = int(temp2[i])
-        state['u'][2][i] = int(temp3[i])
+        state['b'][i][2] = state['u'][i][2]
+        state['d'][i][2] = int(temp[i])
+        state['f'][i][2] = int(temp2[i])
+        state['u'][i][2] = int(temp3[i])
 
 def ri(state):
     state['r'] = np.rot90(np.array(state['r']), 1).tolist()
@@ -96,25 +96,25 @@ def ri(state):
     temp3 = np.array(state['b'])[:,0]
 
     for i in range(3):
-        state['f'][0][i] = state['u'][0][i]
+        state['f'][i][0] = state['u'][i][0]
+        state['d'][i][0] = int(temp[i])
+        state['b'][i][0] = int(temp2[i])
+        state['u'][i][0] = int(temp3[i])
+
+def f(state):
+    state['f'] = np.rot90(np.array(state['f']), 3).tolist()
+    temp = np.array(state['r'])[:,0]
+    temp2 = np.array(state['d'])[0,:]
+    temp3 = np.array(state['l'])[:,2]
+
+    for i in range(3):
+        state['r'][i][0] = state['u'][2][i]
         state['d'][0][i] = int(temp[i])
-        state['b'][0][i] = int(temp2[i])
-        state['u'][0][i] = int(temp3[i])
-
-# def f(state):
-#     state['l'] = np.rot90(np.array(state['l']), 3).tolist()
-#     temp = np.array(state['u'])[:,0]
-#     temp2 = np.array(state['f'])[:,0]
-#     temp3 = np.array(state['d'])[:,0]
-
-#     for i in range(3):
-#         state['u'][0][i] = state['b'][0][i]
-#         state['f'][0][i] = int(temp[i])
-#         state['d'][0][i] = int(temp2[i])
-#         state['b'][0][i] = int(temp3[i])
+        state['l'][i][2] = int(temp2[i])
+        state['u'][2][i] = int(temp3[i])
 
 # def fi(state):
-#     state['l'] = np.array(state['l']).transpose().tolist()
+#     state['f'] = np.rot90(np.array(state['f']), 1).tolist()
 #     temp = np.array(state['u'])[:,0]
 #     temp2 = np.array(state['b'])[:,0]
 #     temp3 = np.array(state['d'])[:,0]
