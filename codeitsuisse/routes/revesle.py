@@ -7,7 +7,7 @@ import json
 from flask import request, Response
 from codeitsuisse import app
 
-guesses = 0
+
 rand_ele = lambda x: x[randrange(0,len(x))]
 @app.route('/reversle', methods=['POST'])
 def evaluate_reversle():
@@ -15,8 +15,11 @@ def evaluate_reversle():
     eqn_len = data["equationLength"]
     if "attemptsAllowed" in data:
         attempts = data["attemptsAllowed"]
-    else:
+    elif "attemptsLeft" in data:
         attempts = data["attemptsLeft"]
+    else:
+        attempts = 1
+
     output = guess(attempts,eqn_len,
                    data["equationHistory"] if "equationHistory" in data else None,
                    data["resultHistory"] if "resultHistory" in data else None)
