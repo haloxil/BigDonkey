@@ -35,7 +35,7 @@ def cauldron_logic(stream: list):
     def bin_search(stream):
         nonlocal store
         lo = 0
-        hi = (stream["part2"]["row_number"]**2 + 1) * (100 / stream["part2"]["flow_rate"])
+        hi = (stream["part2"]["row_number"]**2 + 10) * (100 / stream["part2"]["flow_rate"])
         while hi - lo > 1:
             store = [[-1] * (i+1) for i in range(stream["part2"]["row_number"]+1)]
             mid = (hi + lo) // 2
@@ -46,7 +46,7 @@ def cauldron_logic(stream: list):
             return lo
         elif (get_water(stream["part2"]["row_number"],stream["part2"]["col_number"],stream["part2"]["flow_rate"]*hi) == stream["part2"]["amount_of_soup"]):
             return hi
-        else: print("could not find possible timing!!!")
+        else: return lo
     def get_water_lopsided(row,col,initial_water):
         if(col < 0 or col>row): return 150.0 if(col%2 == 0) else 100.0
         if(store[row][col] != -1): return store[row][col]
