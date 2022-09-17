@@ -77,4 +77,6 @@ def to_cumulative_delayed(stream: list, quantity_block: int):  #Returns: ["times
     curr_out += update_cum_dict()
     if not curr_out == "":
         output.append(current_timestamp + curr_out)
-    return json.dumps(output)
+    
+    output_dict = {"output": output}
+    return json.dumps(output_dict)
