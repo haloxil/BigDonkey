@@ -32,7 +32,7 @@ def stig_warmup_logic(interview):
     for real_value in range(1,max+1):
         possible_values = total_values.copy()
         for i in range(len(questions)):
-            question_values = {i for i in range(interview["questions"][0]["lower"],interview["questions"][0]["upper"]+1)}
+            question_values = {i for i in range(interview["questions"][i]["lower"],interview["questions"][i]["upper"]+1)}
             if real_value in question_values:
                 possible_values = possible_values.difference(total_values.difference(question_values))
             else:
