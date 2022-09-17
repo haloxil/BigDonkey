@@ -14,15 +14,15 @@ def evaluate_crypto():
     data = request.get_json()
     final_output = []
     output = []
-    return data
-    for data_list in data:
-        for elem in data_list:
-            max = crypto(elem)
-            memo_dict[elem] = max
-            output.append(max)              
-        final_output.append(output)
-        output = []
-    return json.dumps(final_output)
+    return json.dumps(data)
+    #for data_list in data:
+    #    for elem in data_list:
+    #        max = crypto(elem)
+    #        memo_dict[elem] = max
+    #        output.append(max)
+    #    final_output.append(output)
+    #    output = []
+    #return json.dumps(final_output)
 
 def collatz(number):
     if number % 2 == 0:
