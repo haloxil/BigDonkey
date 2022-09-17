@@ -51,27 +51,34 @@ def stig_full():
     return Response(json.dumps(output), mimetype='application/json')
 
 def stig_full_logic(interview):
-    max = interview["maxRating"]
+    maximum = interview["maxRating"]
     questions = interview["questions"]
     lucky = interview["lucky"]
     p=1
+    next_p = 0
     possibility_array = [0]
-    for real_value in range(1,max+1):
+    def f(val):
+        return (val + p * lucky - 1) % maximum + 1
+    for real_value in range(1,maximum+1):
         possible_values = SLinkedList()
-        for x in range(max,0,-1):
+        for x in range(maximum,0,-1):
             possible_values.AtBegining(x)
         possibility_array.append(possible_values)
     for question_id in range(len(questions)):
-        for real_value in range(1,max+1):
-            if questions[question_id]["lower"] <= real_value <= questions[question_id]["upper"]:
-                possibility_array[question_id].KeepRange(questions[question_id]["lower"],questions[question_id]["upper"])
+        next_p = 0
+        for real_value in range(1,maximum+1):
+            first_arg = f(questions[question_id]["lower"])
+            second_arg = f(questions[question_id]["upper"])
+            if first_arg <= real_value <= second_arg:
+                possibility_array[real_value].KeepRange(min(first_arg,second_arg),max(first_arg,second_arg))
             else:
-                possibility_array[question_id].RemoveRange(questions[question_id]["lower"],questions[question_id]["upper"])
-            if possibility_array[question_id].head.data == real_value:
-                p += 1
-        gcd = math.gcd(p,max)
-        p = int(p / gcd)
-    return {"p": int(p / gcd), "q": int(max / gcd)}
+                possibility_array[real_value].RemoveRange(min(first_arg,second_arg),max(first_arg,second_arg))
+            if possibility_array[real_value].head.data == real_value:
+                next_p += 1
+        gcd = math.gcd(next_p,maximum)
+        p = int(next_p / gcd)
+    gcd = math.gcd(next_p,maximum)
+    return {"p": int(next_p / gcd), "q": int(maximum / gcd)}
 
 class Node:
     def __init__(self, data=None):
