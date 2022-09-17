@@ -26,20 +26,18 @@ def stig_warmup():
 def stig_warmup_logic(interview):
     max = interview["maxRating"]
     questions = interview["questions"]
-    total_values = {i for i in range(1,max+1)}
     p=0
     q=0
     for real_value in range(1,max+1):
-        possible_values = total_values.copy()
+        possible_values = SLinkedList()
+        for i in range(max,0,-1):
+            possible_values.AtBegining(i)
         for i in range(len(questions)):
-            question_values = {i for i in range(interview["questions"][i]["lower"],interview["questions"][i]["upper"]+1)}
-            if real_value in question_values:
-                possible_values = possible_values.difference(total_values.difference(question_values))
+            if questions[i]["lower"] <= real_value <= questions[i]["upper"]:
+                possible_values.KeepRange(questions[i]["lower"],questions[i]["upper"])
             else:
-                possible_values = possible_values.difference(question_values)
-        if len(possible_values) == 1 and real_value in possible_values:
-            p += 1
-        elif min(possible_values) == real_value:
+                possible_values.RemoveRange(questions[i]["lower"],questions[i]["upper"])
+        if possible_values.head.data == real_value:
             p += 1
     gcd = math.gcd(p,max)
     return {"p": int(p / gcd), "q": int(max / gcd)}
@@ -48,3 +46,95 @@ def stig_warmup_logic(interview):
 def stig_full():
     output = []
     return Response(json.dumps(output), mimetype='application/json')
+
+class Node:
+    def __init__(self, data=None):
+        self.data = data
+        self.next = None
+
+class SLinkedList:
+    def __init__(self):
+        self.head = None
+
+    def AtBegining(self, data_in):
+        NewNode = Node(data_in)
+        NewNode.next = self.head
+        self.head = NewNode
+
+    # Function to remove node
+    def RemoveNode(self, Removekey):
+        HeadVal = self.head
+
+        if (HeadVal is not None):
+            if (HeadVal.data == Removekey):
+                self.head = HeadVal.next
+                HeadVal = None
+                return
+        while (HeadVal is not None):
+            if HeadVal.data == Removekey:
+                break
+            prev = HeadVal
+            HeadVal = HeadVal.next
+
+        if (HeadVal == None):
+            return
+
+        prev.next = HeadVal.next
+        HeadVal = None
+
+    def RemoveRange(self, itemLeft, itemRight):
+        HeadVal = self.head
+        foundLeft = False
+        lastLeft = None
+        prev = None
+        while (HeadVal is not None):
+            while not foundLeft:
+                if(HeadVal == None): return
+                if HeadVal.data >= itemLeft:
+                    foundLeft = True
+                    lastLeft = prev
+                else:
+                    prev = HeadVal
+                    HeadVal = HeadVal.next
+            if HeadVal.data > itemRight:
+                break
+            prev = HeadVal
+            HeadVal = HeadVal.next
+
+        if (HeadVal == None):
+            lastLeft.next = None
+            return
+        if(lastLeft != None):
+            lastLeft.next = HeadVal
+        else:
+            self.head = HeadVal
+        HeadVal = None
+
+    def KeepRange(self, itemLeft, itemRight):
+        HeadVal = self.head
+        foundLeft = False
+
+        while (HeadVal is not None):
+            while not foundLeft:
+                if HeadVal.data >= itemLeft:
+                    foundLeft = True
+                    self.head = HeadVal
+                else:
+                    prev = HeadVal
+                    HeadVal = HeadVal.next
+            if HeadVal.data > itemRight:
+                break
+            prev = HeadVal
+            HeadVal = HeadVal.next
+
+        if (HeadVal == None):
+            return
+
+        prev.next = None
+        HeadVal = None
+
+    def LListprint(self):
+        printval = self.head
+        while (printval):
+            print(printval.data),
+            printval = printval.next
