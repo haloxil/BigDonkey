@@ -98,7 +98,7 @@ def evaluate_calendar():
 
     new_year = 2001 + part1.index(' ')
     day_list = part1.split(",")
-    output = []
+    output = [new_year]
     for i in range(len(day_list)):
         if day_list[i].isspace():
             continue
@@ -161,9 +161,6 @@ def evaluate_calendar():
                     date2 = datetime.datetime(new_year,i+1,j+1)
                     if date2.weekday() == 6:
                         output.append((date2 - datetime.datetime(new_year,1,1)).days + 1)
-
-    output.sort()
-    output.insert(0, new_year)
 
     output_dict = {"part1": part1, "part2": output}
     return json.dumps(output_dict)
