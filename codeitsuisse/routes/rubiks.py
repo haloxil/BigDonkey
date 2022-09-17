@@ -66,7 +66,7 @@ def l(state):
         state['b'][0][i] = int(temp3[i])
 
 def li(state):
-    state['l'] = np.array(state['l']).transpose().tolist()
+    state['l'] = np.rot90(np.array(state['l']), 1).tolist()
     temp = np.array(state['u'])[:,0]
     temp2 = np.array(state['b'])[:,0]
     temp3 = np.array(state['d'])[:,0]
@@ -90,7 +90,7 @@ def r(state):
         state['u'][2][i] = int(temp3[i])
 
 def ri(state):
-    state['r'] = np.array(state['r']).transpose().tolist()
+    state['r'] = np.rot90(np.array(state['r']), 1).tolist()
     temp = np.array(state['f'])[:,0]
     temp2 = np.array(state['d'])[:,0]
     temp3 = np.array(state['b'])[:,0]
@@ -134,7 +134,7 @@ def u(state):
     state['b'][0] = temp
 
 def ui(state):
-    state['u'] = np.array(state['u']).transpose().tolist()
+    state['u'] = np.rot90(np.array(state['u']), 1).tolist()
     temp = state['f'][0]
     temp2 = state['r'][0]
     temp3 = state['b'][0]
@@ -154,7 +154,7 @@ def d(state):
     state['l'][2] = temp3
 
 def di(state):
-    state['d'] = np.array(state['d']).transpose().tolist()
+    state['d'] = np.rot90(np.array(state['d']), 1).tolist()
     temp = state['l'][2]
     state['l'][2] = state['f'][2]
     state['f'][2] = state['r'][2]
