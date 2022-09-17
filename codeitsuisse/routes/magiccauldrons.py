@@ -19,7 +19,7 @@ def cauldron():
     output = []
     for i in range(num_cases):
         output.append(cauldron_logic(data[i]))
-    return json.dumps(output)
+    return jsonify(output)
 
 def cauldron_logic(stream: list):
     output_dict = {}
@@ -28,7 +28,9 @@ def cauldron_logic(stream: list):
         if(col < 0 or col > row): return 100
         if(store[row][col] != -1): return store[row][col]
         if(row == 0): return initial_water
-        store[row][col] = (get_water(row-1,col-1,initial_water)-100 + get_water(row-1,col,initial_water)-100)/2.0
+        left = max(get_water(row-1,col-1,initial_water)-100,0)
+        right = max(get_water(row-1,col,initial_water)-100,0)
+        store[row][col] = (left + right)/2.0
         return store[row][col]
     def bin_search(stream):
         nonlocal store
@@ -49,7 +51,9 @@ def cauldron_logic(stream: list):
         if(col < 0 or col>row): return 150.0 if(col%2 == 0) else 100.0
         if(store[row][col] != -1): return store[row][col]
         if(row == 0): return initial_water
-        store[row][col] = (get_water_lopsided(row-1,col-1,initial_water)-(100.0 if col%2 == 0 else 150.0) + get_water_lopsided(row-1,col,initial_water)-(150.0 if col%2 == 0 else 100.0))/2.0
+        left = max(0,get_water_lopsided(row-1,col-1,initial_water)-(100.0 if col%2 == 0 else 150.0))
+        right = max(0,get_water_lopsided(row-1,col,initial_water)-(150.0 if col%2 == 0 else 100.0))
+        store[row][col] = (left + right)/2.0
         return store[row][col]
     def bin_search_lopsided(stream):
         nonlocal store
