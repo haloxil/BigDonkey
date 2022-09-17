@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2f93a891-cdbc-402d-a835-072fd816d735" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/python-student-template.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/python-student-template.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.py" beforeDir="false" afterPath="$PROJECT_DIR$/App.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TickerStream.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/codeitsuisse/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/codeitsuisse/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codeitsuisse/routes/swissstig.py" beforeDir="false" afterPath="$PROJECT_DIR$/codeitsuisse/routes/swissstig.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,5 +113,31 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/codeitsuisse/routes/swissstig.py</url>
+          <line>72</line>
+          <option name="timeStamp" value="142" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/codeitsuisse/routes/swissstig.py</url>
+          <line>78</line>
+          <option name="timeStamp" value="143" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/codeitsuisse/routes/swissstig.py</url>
+          <line>68</line>
+          <option name="timeStamp" value="146" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/codeitsuisse/routes/swissstig.py</url>
+          <line>75</line>
+          <option name="timeStamp" value="147" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
