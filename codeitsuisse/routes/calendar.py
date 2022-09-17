@@ -1,6 +1,8 @@
 import logging
 import json
 
+import datetime
+
 from flask import request, Response
 
 from codeitsuisse import app
@@ -11,11 +13,90 @@ logger = logging.getLogger(__name__)
 @app.route('/calendarDays', methods=['POST'])
 def evaluate_calendar():
     data = request.get_json()
-    numbers = data["numbers"]
+    count = 0
+    index = 0
     part1 = ""
-    if (len(numbers) == 1):
-        for i in range(9):
-            part1 += 7*" " + ","
+    date_dic = {}
 
-    output_dict = {"part1": [part1]}
+    numbers = data["numbers"]
+    year = numbers[0]
+
+    for day in numbers[1:]: #never check leap year
+        if day <= 0 or day >= 366:
+            continue
+        date = datetime.datetime(year,1,1) + datetime.timedelta(day - 1)
+        datem = date.strptime(str(date), "%Y-%m-%d %H:%M:%S")
+        month = datem.month - 1
+        day_of_week = date.weekday()
+        if month not in date_dic:
+            date_dic[month] = str(day_of_week)
+        else:
+            if str(day_of_week) not in date_dic[month]:
+                date_dic[month] += str(day_of_week)
+
+    if not bool (date_dic):
+        for i in range(12):
+            part1 += 7 * " " + ","
+
+    date_list = list(date_dic.keys())
+    date_list.sort()
+    temp = ""
+
+    while count != 12:
+        if date_list[index] != count:
+            part1 += 7 * " " + ","
+        else:
+            if "0" in date_dic[date_list[index]]:
+                temp += "m"
+            else:
+                temp += " "
+            if "1" in date_dic[date_list[index]]:
+                temp += "t"
+            else:
+                temp += " "
+            if "2" in date_dic[date_list[index]]:
+                temp += "w"
+            else:
+                temp += " "
+            if "3" in date_dic[date_list[index]]:
+                temp += "t"
+            else:
+                temp += " "
+            if "4" in date_dic[date_list[index]]:
+                temp += "f"
+            else:
+                temp += " "
+            if "5" in date_dic[date_list[index]]:
+                temp += "s"
+            else:
+                temp += " "
+            if "6" in date_dic[date_list[index]]:
+                temp += "s"
+            else:
+                temp += " "
+
+            if temp == "mtwtfss":
+                part1 += "alldays"
+            elif temp == "mtwtfs ":
+                part1 += "weekday"
+            elif temp == "mtwtf s":
+                part1 += "weekday"
+            elif temp == "mtwtf  ":
+                part1 += "weekday"
+            elif temp == "     ss":
+                part1 += "weekend"
+            else:
+                part1 += temp
+            
+            temp = ""
+            part1 += ","
+
+            if index < len(date_list) - 1:
+                index += 1
+
+        count += 1
+
+    year_count = part1.index(' ')
+
+    output_dict = {"part1": part1, "part2": [year_count + 2001]}
     return json.dumps(output_dict)

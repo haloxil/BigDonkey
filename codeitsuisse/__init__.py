@@ -6,5 +6,7 @@ import codeitsuisse.routes.crypto
 import codeitsuisse.routes.magiccauldrons
 import codeitsuisse.routes.revesle
 import codeitsuisse.routes.calendar
+import codeitsuisse.routes.Quordle
+
 import codeitsuisse.routes.dnscache
 import codeitsuisse.routes.swissstig
