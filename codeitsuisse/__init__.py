@@ -6,5 +6,5 @@ import codeitsuisse.routes.crypto
 import codeitsuisse.routes.magiccauldrons
 import codeitsuisse.routes.revesle
 import codeitsuisse.routes.calendar
-
+import codeitsuisse.routes.dnscache
 
