@@ -4,5 +4,6 @@ import codeitsuisse.routes.square
 import codeitsuisse.routes.ticker
 import codeitsuisse.routes.crypto
 import codeitsuisse.routes.magiccauldrons
+import codeitsuisse.routes.calendar
 
 
