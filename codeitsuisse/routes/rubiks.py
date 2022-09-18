@@ -152,6 +152,9 @@ def bi(state):
         state['d'][2][i] = int(temp[i])
         state['l'][i][0] = int(temp2[i])
         state['u'][0][i] = int(temp3[i])
+        print(int(temp3[i]))
+
+    print(state['u'])
 
 def u(state):
     state['u'] = np.rot90(np.array(state['u']), 3).tolist()
