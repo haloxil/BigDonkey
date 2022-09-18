@@ -154,7 +154,7 @@ def bi(state):
         state['u'][0][i] = int(temp3[i])
 
 def u(state):
-    state['u'] = np.rot90(np.array(state['u']), 3).tolist()
+    state['u'] = np.rot90(np.array(state['u']), 1).tolist()
     temp = state['l'][0]
     temp2 = state['b'][0]
     temp3 = state['r'][0]
@@ -164,7 +164,7 @@ def u(state):
     state['f'][0] = temp3
 
 def ui(state):
-    state['u'] = np.rot90(np.array(state['u']), 1).tolist()
+    state['u'] = np.rot90(np.array(state['u']), 3).tolist()
     temp = state['f'][0]
     temp2 = state['r'][0]
     temp3 = state['b'][0]
